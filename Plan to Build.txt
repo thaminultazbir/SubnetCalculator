@@ -1,0 +1,12 @@
+Given an IP address:------
+Given an subnet mask:------
+-------------------------------------
+
+App Automatically Generate 
+    * Network address
+    * Broadcast address
+    * Number of valid hosts per subnet
+    * Wildcard mask
+    * Mask bit
+
+    * Random generate IP address
