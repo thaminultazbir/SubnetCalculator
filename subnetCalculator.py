@@ -25,9 +25,28 @@ def subnetCalculator():
             if (len(mask_octets) == 4) and (int(mask_octets[0]) == 255) and (int(mask_octets[1]) in masks) and (int(mask_octets[2]) in masks) and (int(mask_octets[3]) in masks) and (int(mask_octets[0]) >= int(mask_octets[1]) >= int(mask_octets[2]) >= int(mask_octets[3])):
                 break
             else:
-                print("Enter a valid Subnet Mask.")
+                print("The Subnet Mask is INVALID! Please try Again .")
                 continue
 
+        # --Algorithm for Subnet indentification, based on IP and Subnet mask--
+        
+        mask_octets_binary = []
+        for octet in mask_octets:
+            binary_octet = bin(int(octet)).lstrip('0b')
+            mask_octets_binary.append(binary_octet.zfill(8))
+        
+        binary_mask = "".join(mask_octets_binary)
+
+        no_of_zeros = binary_mask.count(0)
+        no_of_ones = 32 - no_of_zeros
+        no_of_hosts = abs(2**no_of_zeros - 2)
+
+        wildcard_octets = []
+        for octet in mask_octets:
+            wild_octet = 255 - int(octet)
+            wildcard_octets.append(str(wild_octet))
+        
+        wildcard_mask = "".join(wildcard_octets)
 
 
     except:
