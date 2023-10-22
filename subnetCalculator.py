@@ -17,5 +17,18 @@ def subnetCalculator():
                 continue
         masks = [255, 254, 252, 248, 240, 224, 192, 128, 0]
 
+        # ----Checking Subnet Mask Validity----
+        while True:
+            subnet_mask = input("Enter subnet mask: ")
+            mask_octets = subnet_mask.split(".")
+
+            if (len(mask_octets) == 4) and (int(mask_octets[0]) == 255) and (int(mask_octets[1]) in masks) and (int(mask_octets[2]) in masks) and (int(mask_octets[3]) in masks) and (int(mask_octets[0]) >= int(mask_octets[1]) >= int(mask_octets[2]) >= int(mask_octets[3])):
+                break
+            else:
+                print("Enter a valid Subnet Mask.")
+                continue
+
+
+
     except:
         print('')
