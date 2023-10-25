@@ -64,6 +64,99 @@ def subnetCalculator():
         #print(binary_ip)   
         #Example: for 192.168.2.100 => 11000000101010000000101000000001
 
+        #Getting the network address and broadcast address from the binary strings obtained above
+        
+        network_address_binary = binary_ip[:(no_of_ones)] + "0" * no_of_zeros
+        #print(network_address_binary)
+        
+        broadcast_address_binary = binary_ip[:(no_of_ones)] + "1" * no_of_zeros
+        #print(broadcast_address_binary)
+        
+        #Converting everything back to decimal (readable format)
+        net_ip_octets = []
+        
+        #range(0, 32, 8) means 0, 8, 16, 24
+        for bit in range(0, 32, 8):
+            net_ip_octet = network_address_binary[bit: bit + 8]
+            net_ip_octets.append(net_ip_octet)
+        
+        #We will end up with 4 slices of the binary IP address: [0: 8], [8: 16], [16: 24] and [24:31]; remember that each slice goes up to, but not including, the index on the right side of the colon!
+        
+        #print(net_ip_octets)
+        
+        net_ip_address = []
+        
+        for each_octet in net_ip_octets:
+            net_ip_address.append(str(int(each_octet, 2)))
+            
+        #print(net_ip_address)
+        
+        network_address = ".".join(net_ip_address)
+        #print(network_address)
+        
+        bst_ip_octets = []
+        
+        #range(0, 32, 8) means 0, 8, 16, 24
+        for bit in range(0, 32, 8):
+            bst_ip_octet = broadcast_address_binary[bit: bit + 8]
+            bst_ip_octets.append(bst_ip_octet)
+        
+        #print(bst_ip_octets)
+        
+        bst_ip_address = []
+        
+        for each_octet in bst_ip_octets:
+            bst_ip_address.append(str(int(each_octet, 2)))
+            
+        #print(bst_ip_address)
+        
+        broadcast_address = ".".join(bst_ip_address)
+        #print(broadcast_address)
+        
+        #Results for selected IP/mask
+        print("\n")
+        print("Network address is: %s" % network_address)
+        print("Broadcast address is: %s" % broadcast_address)
+        print("Number of valid hosts per subnet: %s" % no_of_hosts)
+        print("Wildcard mask: %s" % wildcard_mask)
+        print("Mask bits: %s" % no_of_ones)
+        print("\n")
+        
+#Application #1 - Part #4
+        
+        #Generation of random IP addresses in the subnet
+        while True:
+            generate = input("Generate random IP address from this subnet? (y/n)")
+            
+            if generate == "y":
+                generated_ip = []
+                
+                #Obtain available IP address in range, based on the difference between octets in broadcast address and network address
+                for indexb, oct_bst in enumerate(bst_ip_address):
+                    #print(indexb, oct_bst)
+                    for indexn, oct_net in enumerate(net_ip_address):
+                        #print(indexn, oct_net)
+                        if indexb == indexn:
+                            if oct_bst == oct_net:
+                                #Add identical octets to the generated_ip list
+                                generated_ip.append(oct_bst)
+                            else:
+                                #Generate random number(s) from within octet intervals and append to the list
+                                generated_ip.append(str(random.randint(int(oct_net), int(oct_bst))))
+                
+                #IP address generated from the subnet pool
+                #print(generated_ip)
+                y_iaddr = ".".join(generated_ip)
+                #print(y_iaddr)
+                
+                print("Random IP address is: %s" % y_iaddr)
+                print("\n")
+                continue
+                
+            else:
+                print("Ok, bye!\n")
+                break
+
     except KeyboardInterrupt:
         print("\n\nProgram aborted by user. Exiting...\n")
         sys.exit()
