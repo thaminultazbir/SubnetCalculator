@@ -46,8 +46,24 @@ def subnetCalculator():
             wild_octet = 255 - int(octet)
             wildcard_octets.append(str(wild_octet))
         
-        wildcard_mask = "".join(wildcard_octets)
+        wildcard_mask = ".".join(wildcard_octets)
 
+        ip_octets_binary = []
+        
+        for octet in ip_octets:
+            binary_octet = bin(int(octet)).lstrip('0b')
+            #print(binary_octet)
+            
+            ip_octets_binary.append(binary_octet.zfill(8))
+                
+        #print(ip_octets_binary)
+        #Example: for 192.168.10.1 => 
+        
+        binary_ip = "".join(ip_octets_binary)
+    
+        #print(binary_ip)   
+        #Example: for 192.168.2.100 => 11000000101010000000101000000001
 
-    except:
-        print('')
+    except KeyboardInterrupt:
+        print("\n\nProgram aborted by user. Exiting...\n")
+        sys.exit()
